@@ -6,10 +6,11 @@ export class UserRepository {
         return await User.findAll();
     }
 
+    async findById(id: number): Promise<User | null> {
+            return User.findByPk(id);
+          }
+
 }
-
-
-
 
 // async create(user: User): Promise<User> {
 //     return await User.create(user);

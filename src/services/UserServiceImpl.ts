@@ -13,8 +13,7 @@ export class UserServiceImpl implements UserService {
     return await this.userRepository.findAll();
   }
 
+  findById(id: number): Promise<User | null> {
+    return this.userRepository.findById(id);
 
-
-  
-}
-
+}}
