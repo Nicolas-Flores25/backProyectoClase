@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services/UserService';
 import { User } from '../models/user';
+import { promises } from 'dns';
 
 export class UserController {
 
@@ -49,26 +50,25 @@ export class UserController {
 
   //Login
 
-  // async login(req: Request, res: Response) {
-  //   try {
-  //     const { username, password } = req.query; // Parámetros por query
-
-  //     if (!username || !password) {
-  //       return res.status(400).json({ message: 'Faltan credenciales' });
-  //     }
-
-  //     const isValid = await this.userService.login(username as string, password as string);
-
-  //     if (isValid) {
-  //       res.status(200).json({ message: 'Login exitoso' });
-  //     } else {
-  //       res.status(401).json({ message: 'Credenciales inválidas' });
-  //     }
-  //   } catch (error) {
-  //     res.status(500).json({ message: 'Error en el servidor' });
-  //   }
-  // }
-
+  async login(req: Request, res: Response) {
+    try {
+      const { email, password } = req.query;
+      
+      if (!email || !password) {
+        return res.status(400).json({ message: 'Faltan email o contraseña' });
+      }
+  
+      const success = await this.userService.login(email as string, password as string);
+      
+      if (success) {
+        res.status(200).json({ message: 'Login exitoso' });
+      } else {
+        res.status(401).json({ message: 'Credenciales incorrectas' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error en el servidor' });
+    }
+  }
 
 
 

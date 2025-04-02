@@ -16,4 +16,14 @@ export class UserServiceImpl implements UserService {
   findById(id: number): Promise<User | null> {
     return this.userRepository.findById(id);
 
+}
+
+async login(email: string, password: string): Promise<boolean> {
+  const user = await User.findOne({ 
+    where: { 
+      email: email,
+      password: password 
+    }
+  });
+  return !!user; 
 }}
