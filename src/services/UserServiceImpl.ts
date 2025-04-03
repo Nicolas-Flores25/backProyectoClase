@@ -18,6 +18,19 @@ export class UserServiceImpl implements UserService {
 
 }
 
+async create(user: User): Promise<User> {
+  return this.userRepository.create(user);
+}
+
+
+async update(id: number, user: User): Promise<[number, User[]]> {
+  return this.userRepository.update(id, user);
+}
+
+async delete(id: number): Promise<number> {
+  return this.userRepository.delete(id);
+}
+
 async login(email: string, password: string): Promise<boolean> {
   const user = await User.findOne({ 
     where: { 
@@ -26,4 +39,8 @@ async login(email: string, password: string): Promise<boolean> {
     }
   });
   return !!user; 
-}}
+}
+
+
+
+}

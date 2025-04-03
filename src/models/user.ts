@@ -1,11 +1,18 @@
 // AutoIncrement, PrimaryKey, AllowNull, Validate, IsEmail
 
+import { table } from "console";
 import { Table, Column, Model, DataType } from "sequelize-typescript";
 
 
 @Table({
     tableName: 'users',
-    timestamps: false
+    timestamps: false,
+    defaultScope: {
+        attributes: {
+            exclude: ['password']
+        }
+    
+    }
 
 })
 

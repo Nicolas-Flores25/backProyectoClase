@@ -47,6 +47,47 @@ export class UserController {
     }
   }
 
+  async create(req: Request, res: Response) {
+    try {
+      const userData: Partial<User> = req.body;
+      const createdUser = await this.userService.create(userData);
+    res.status(201).json(createdUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al crear usuario' });
+  }
+}
+
+  
+async update(req: Request, res: Response) {
+  try {
+    const id = parseInt(req.params.id);
+    const userData: Partial<User> = req.body; // 👈 Usa Partial<User>
+    const [affectedCount] = await this.userService.update(id, userData);
+    
+    if (affectedCount === 1) {
+      res.status(200).json({ message: 'Usuario actualizado' });
+    } else {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar usuario' });
+  }
+}
+
+  async delete(req: Request, res: Response) {
+    try {
+      const id: number = parseInt(req.params.id);
+      const result: number = await this.userService.delete(id);
+      if (result === 1) {
+        res.status(200).json({ message: 'Usuario eliminado correctamente' });
+      } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error al eliminar el usuario' });
+    }
+  }
+
 
   //Login
 
